@@ -5,6 +5,7 @@ import os
 import subprocess
 
 import FullAnalysis
+import SplitBed
 import click
 
 BASE_SCALE = 1000000
@@ -28,6 +29,13 @@ def main(samples, sizes, poolthreads):
 def genome_coverage(sample, sizes):
     '''Compute genome coverage on a single sample.'''
     print ('Compute genome coverage on sample {}'.format(sample))
+    do_genome_coverage(sample, sizes)
+    splits = SplitBed.splits(sample)
+    for split in splits:
+        do_genome_coverage(split, sizes)
+
+
+def do_genome_coverage(sample, sizes):
     bed_raw = sample + "-raw.bed"
     bed_center = sample + "-center.bed"
     center_annotations(bed_raw, bed_center)
@@ -106,11 +114,9 @@ def coverage(bed_input, bed_output, sizes, sample, scale=None, strand=None):
     track = 'track type=bedGraph name="' + sample + '"'
     if not strand is None:
         track += ' Minus' if strand == '-' else ' Plus'
-    with open(sort_output, "r") as infile:
-        with open(bed_output, "w") as outfile:
-            outfile.write(track + '\n')
-            for line in infile:
-                outfile.write(line)
+    with open(sort_output, "r") as infile, open(bed_output, "w") as outfile:
+        outfile.write(track + '\n')
+        outfile.writelines(infile)
     os.remove(sort_output)
 
 
