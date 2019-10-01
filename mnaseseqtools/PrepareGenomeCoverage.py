@@ -32,7 +32,7 @@ def prepare_genome_coverage(sample, sizes):
     do_genome_coverage(sample, sizes)
     splits = SplitBed.splits(sample)
     for split in splits:
-        do_genome_coverage(split, sizes)
+        do_prepare_genome_coverage(split, sizes)
 
 
 def do_prepare_genome_coverage(sample, sizes):
