@@ -21,8 +21,8 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'prepgenecov = checseqtools.PrepareGenomeCoverage:main',
-            'fullanalysis = checseqtools.FullAnalysis:main'
+            'prepgenecov = mnaseseqtools.PrepareGenomeCoverage:main',
+            'fullanalysis = mnaseseqtools.FullAnalysis:main'
         ]
     }
 )
