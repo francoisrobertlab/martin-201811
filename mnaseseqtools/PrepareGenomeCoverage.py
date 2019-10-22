@@ -29,7 +29,7 @@ def main(samples, sizes, index):
 def prepare_genome_coverage(sample, sizes):
     '''Prepare BED file used for genome coverage on a single sample.'''
     print ('Compute genome coverage on sample {}'.format(sample))
-    do_genome_coverage(sample, sizes)
+    do_prepare_genome_coverage(sample, sizes)
     splits = SplitBed.splits(sample)
     for split in splits:
         do_prepare_genome_coverage(split, sizes)
