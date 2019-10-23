@@ -13,11 +13,15 @@ import pandas as pd
               'the original sample names in the second column.')
 @click.option('--annotations', '-a', type=click.Path(exists=True), default='annotations.bed',
               help='Keep reads for which their center is located on specified annotations.')
+@click.option('--index', '-i', type=int, default=None,
+              help='Index of sample to process in samples file.')
 def main(samples, annotations):
     '''Keep only reads that intersects specified annotations.'''
     logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    sample_columns = pd.read_csv(samples, header=None, sep='\t', comment='#')
     annot_length = annotations_length(annotations)
+    sample_columns = pd.read_csv(samples, header=None, sep='\t', comment='#')
+    if index != None:
+        sample_columns = sample_columns.iloc[index:index + 1]
     for index, columns in sample_columns.iterrows():
         tag = columns[0]
         sample = columns[1] if len(columns) > 1 else None
