@@ -12,4 +12,4 @@ then
   SLURM_ARRAY_TASK_ID=0
 fi
 
-intersectbed -i $SLURM_ARRAY_TASK_ID $@
+intersect -i $SLURM_ARRAY_TASK_ID $@
