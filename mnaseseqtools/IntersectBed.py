@@ -53,7 +53,7 @@ def intersect(sample, tag, annotations, annot_length):
             if line.startswith('#'):
                 outfile.write(line)
             else:
-                columns = line.split('\t')
+                columns = lineline.rstrip('\n\r').split('\t')
                 for i in range(annot_length, len(columns)):
                     outfile.write(columns[i])
                     outfile.write('\t')
