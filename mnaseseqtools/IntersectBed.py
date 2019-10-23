@@ -15,7 +15,7 @@ import pandas as pd
               help='Keep reads for which their center is located on specified annotations.')
 @click.option('--index', '-i', type=int, default=None,
               help='Index of sample to process in samples file.')
-def main(samples, annotations):
+def main(samples, annotations, index):
     '''Keep only reads that intersects specified annotations.'''
     logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     annot_length = annotations_length(annotations)
