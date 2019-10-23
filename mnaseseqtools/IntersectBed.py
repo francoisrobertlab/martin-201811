@@ -56,6 +56,7 @@ def intersect(sample, tag, annotations, annot_length):
                 columns = line.split('\t')
                 for i in range(annot_length, len(columns)):
                     outfile.write(columns[i])
+                    outfile.write('\t')
                 outfile.write('\n')
     os.remove(bed_tmp)
     
