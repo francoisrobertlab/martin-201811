@@ -12,7 +12,4 @@ then
   SLURM_ARRAY_TASK_ID=0
 fi
 
-intersectbed -s sample-filter.txt -a top10.txt $SLURM_ARRAY_TASK_ID
-split -s sample-filter.txt -i $SLURM_ARRAY_TASK_ID
-prepgenecov -s sample-filter.txt -i $SLURM_ARRAY_TASK_ID
-genecov -s sample-filter.txt -i $SLURM_ARRAY_TASK_ID
+intersectbed -i $SLURM_ARRAY_TASK_ID $@

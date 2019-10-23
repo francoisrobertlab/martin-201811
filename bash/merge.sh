@@ -12,7 +12,4 @@ then
   SLURM_ARRAY_TASK_ID=0
 fi
 
-merge -i $SLURM_ARRAY_TASK_ID
-split -s merge.txt -i $SLURM_ARRAY_TASK_ID
-prepgenecov -s merge.txt -i $SLURM_ARRAY_TASK_ID
-genecov -s merge.txt -i $SLURM_ARRAY_TASK_ID
+merge -i $SLURM_ARRAY_TASK_ID $@

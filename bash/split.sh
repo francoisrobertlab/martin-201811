@@ -12,6 +12,4 @@ then
   SLURM_ARRAY_TASK_ID=0
 fi
 
-split -i $SLURM_ARRAY_TASK_ID
-prepgenecov -i $SLURM_ARRAY_TASK_ID
-genecov -i $SLURM_ARRAY_TASK_ID
+split -i $SLURM_ARRAY_TASK_ID $@

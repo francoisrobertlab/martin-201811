@@ -3,7 +3,7 @@
 #SBATCH --time=24:00:00
 #SBATCH --array=0-0
 #SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=20G
+#SBATCH --mem-per-cpu=8G
 #SBATCH --mail-user=christian.poitras@ircm.qc.ca
 #SBATCH --mail-type=ALL
 
@@ -12,7 +12,4 @@ then
   SLURM_ARRAY_TASK_ID=0
 fi
 
-intersectbed -s merge-filter.txt -a top10.txt $SLURM_ARRAY_TASK_ID
-split -s merge-filter.txt -i $SLURM_ARRAY_TASK_ID
-prepgenecov -s merge-filter.txt -i $SLURM_ARRAY_TASK_ID
-genecov -s merge-filter.txt -i $SLURM_ARRAY_TASK_ID
+genecov -i $SLURM_ARRAY_TASK_ID $@
