@@ -12,5 +12,4 @@ then
   SLURM_ARRAY_TASK_ID=0
 fi
 
-runbwa -t 4 -i $SLURM_ARRAY_TASK_ID
 bam2bed -t 4 -i $SLURM_ARRAY_TASK_ID
