@@ -13,5 +13,8 @@ then
 fi
 
 # Index FASTA file first
-# bwa index sacCer3.fa
-runbwa --threads 4 --index $SLURM_ARRAY_TASK_ID $@
+# bowtie2-build sacCer3.fa sacCer3.fa.index
+#
+# Recommended parameters for bowtie2
+# -x sacCer3.fa.index
+runbowtie2 --threads 4 --index $SLURM_ARRAY_TASK_ID $@

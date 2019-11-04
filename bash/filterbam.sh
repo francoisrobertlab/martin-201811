@@ -12,6 +12,4 @@ then
   SLURM_ARRAY_TASK_ID=0
 fi
 
-# Index FASTA file first
-# bwa index sacCer3.fa
-runbwa --threads 4 --index $SLURM_ARRAY_TASK_ID $@
+filterbam --threads 4 --index $SLURM_ARRAY_TASK_ID $@
