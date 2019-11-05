@@ -1,14 +1,14 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="MNaseSeqTools",
-    version="0.1-SNAPSHOT",
+    name='MNaseSeqTools',
+    version='0.1-SNAPSHOT',
     packages=find_packages(),
-    author="Christian Poitras",
-    author_email="christian.poitras@ircm.qc.ca",
-    description="Tools to analyze MNase-seq data",
-    keywords="bioinformatics, MNase-seq",
-    url="https://github.com/francoisrobertlab/mnase-201908",
+    author='Christian Poitras',
+    author_email='christian.poitras@ircm.qc.ca',
+    description='Tools to analyze MNase-seq data',
+    keywords='bioinformatics, MNase-seq',
+    url='https://github.com/francoisrobertlab/mnase-201908',
     license='GNU General Public License version 3',
     classifiers=[
         'License :: OSI Approved :: GNU General Public License version 3'

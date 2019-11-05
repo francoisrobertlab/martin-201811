@@ -36,15 +36,15 @@ def prepare_genome_coverage(sample, sizes):
 
 
 def do_prepare_genome_coverage(sample, sizes):
-    bed_raw = sample + "-raw.bed"
-    bed_ignore_strand = sample + "-cov.bed"
+    bed_raw = sample + '-raw.bed'
+    bed_ignore_strand = sample + '-cov.bed'
     center_annotations(bed_raw, bed_ignore_strand)
 
 
 def center_annotations(bed, output):
     '''Resize annotations to 1 positioned at the center.'''
-    with open(bed, "r") as infile:
-        with open(output, "w") as outfile:
+    with open(bed, 'r') as infile:
+        with open(output, 'w') as outfile:
             for line in infile:
                 if line.startswith('track') or line.startswith('browser') or line.startswith('#'):
                     outfile.write(line)
@@ -57,14 +57,14 @@ def center_annotations(bed, output):
                     start = start + int(length / 2)
                     end = start + 1
                     outfile.write(columns[0])
-                    outfile.write("\t")
+                    outfile.write('\t')
                     outfile.write(str(start))
-                    outfile.write("\t")
+                    outfile.write('\t')
                     outfile.write(str(end))
                     for i in range(3, len(columns)):
-                        outfile.write("\t")
+                        outfile.write('\t')
                         outfile.write(columns[i])
-                    outfile.write("\n")
+                    outfile.write('\n')
 
 
 if __name__ == '__main__':
