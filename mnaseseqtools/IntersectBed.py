@@ -39,8 +39,8 @@ def annotations_length(annotations):
 def intersect(sample, tag, annotations, annot_length):
     '''Keep only reads that intersects specified annotations for a single sample.'''
     print ('Keep only reads that intersects specified annotations for sample {}'.format(sample))
-    bed_raw = sample + '-raw.bed'
-    bed_tag_raw = tag + '-raw.bed'
+    bed_raw = sample + '.bed'
+    bed_tag_raw = tag + '.bed'
     bed_tmp = tag + '-tmp.bed'
     cmd = ['bedtools', 'intersect', '-a', annotations, '-b', bed_raw, '-wb']
     logging.debug('Running {}'.format(cmd))

@@ -36,9 +36,9 @@ def prepare_genome_coverage(sample, sizes):
 
 
 def do_prepare_genome_coverage(sample, sizes):
-    bed_raw = sample + '-raw.bed'
-    bed_ignore_strand = sample + '-cov.bed'
-    center_annotations(bed_raw, bed_ignore_strand)
+    bed_raw = sample + '.bed'
+    bed_forcoverage = sample + '-forcov.bed'
+    center_annotations(bed_raw, bed_forcoverage)
 
 
 def center_annotations(bed, output):
