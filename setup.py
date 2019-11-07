@@ -22,7 +22,6 @@ setup(
     entry_points={
         'console_scripts': [
             'prepgenecov = mnaseseqtools.PrepareGenomeCoverage:main',
-            'intersect = mnaseseqtools.IntersectBed:main',
             'fullanalysis = mnaseseqtools.FullAnalysis:main'
         ]
     }
