@@ -6,6 +6,8 @@
 #SBATCH --mem=30G
 #SBATCH --mail-user=christian.poitras@ircm.qc.ca
 #SBATCH --mail-type=ALL
+#SBATCH --output=split-%A_%a.out
+#SBATCH --error=split-%A_%a.out
 
 if [ -z "$SLURM_ARRAY_TASK_ID" ]
 then

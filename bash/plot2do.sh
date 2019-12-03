@@ -6,6 +6,8 @@
 #SBATCH --mem=80G
 #SBATCH --mail-user=christian.poitras@ircm.qc.ca
 #SBATCH --mail-type=ALL
+#SBATCH --output=plot2do-%A_%a.out
+#SBATCH --error=plot2do-%A_%a.out
 
 if [ -z "$SLURM_ARRAY_TASK_ID" ]
 then
