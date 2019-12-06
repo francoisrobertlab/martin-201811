@@ -6,8 +6,6 @@ import click
 import pandas as pd
 import seqtools.SplitBed as sb
 
-BASE_SCALE = 1000000
-
 
 @click.command()
 @click.option('--samples', '-s', type=click.Path(exists=True), default='samples.txt',
