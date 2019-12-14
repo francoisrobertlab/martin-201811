@@ -16,4 +16,4 @@ fi
 
 # Index FASTA file first
 # bwa index sacCer3.fa
-download --threads 8 --index $SLURM_ARRAY_TASK_ID $@
+download --slow --index $SLURM_ARRAY_TASK_ID $@
