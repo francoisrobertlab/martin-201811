@@ -14,6 +14,7 @@ This module loads the following modules and their requirements:
     - samtools/1.9
     - bedtools/2.27.1
     - kentutils/20180716
+    - sra-toolkit/2.9.6
     - vap
     - plot2do
 ]])
