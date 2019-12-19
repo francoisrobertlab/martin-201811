@@ -9,6 +9,7 @@ This module sets the following environment variables:
 
 This module loads the following modules and their requirements:
     - python/3.7.4
+    - perl/5.22.4
     - bwa/0.7.17
     - bowtie2/2.3.4.3
     - samtools/1.9
@@ -27,6 +28,7 @@ whatis("Description: MNase-seq analysis for Celia Jeronimo data")
 always_load("nixpkgs/16.09")
 always_load("gcc/7.3.0")
 always_load("python/3.7.4")
+always_load("perl/5.22.4")
 always_load("bwa/0.7.17")
 always_load("bowtie2/2.3.4.3")
 always_load("samtools/1.9")
