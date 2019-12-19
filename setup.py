@@ -17,6 +17,7 @@ setup(
     install_requires=[
         'click>=7.0',
         'pandas>=0.25.0',
+        'pyBigWig>=0.3.17',
         'seqtools@http://github.com/francoisrobertlab/seqtools/tarball/master'
     ],
     entry_points={
