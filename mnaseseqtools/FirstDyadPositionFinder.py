@@ -44,7 +44,7 @@ def main(genes, signal, mind, maxd, output):
     genes_info.columns = ['spacer', 'chromosome', 'gene', 'tss', 'strand', 'tes']
     genes_info['+1 nucleosome'] = nucleosomes
     genes_info.astype({'+1 nucleosome': 'int64'}).dtypes
-    genes_info.to_csv(output, sep='\t')
+    genes_info.to_csv(output, sep='\t', index=false)
 
 
 def read_tracks(wig):
