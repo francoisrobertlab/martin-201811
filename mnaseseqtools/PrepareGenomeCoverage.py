@@ -10,30 +10,28 @@ import seqtools.SplitBed as sb
 @click.command()
 @click.option('--samples', '-s', type=click.Path(exists=True), default='samples.txt',
               help='Sample names listed one sample name by line.')
-@click.option('--sizes', '-S', type=click.Path(exists=True), default='sacCer3.chrom.sizes',
-              help='Size of chromosomes.')
 @click.option('--index', '-i', type=int, default=None,
               help='Index of sample to process in samples file.')
-def main(samples, sizes, index):
+def main(samples, index):
     '''Prepare BED file used for genome coverage on samples.'''
     logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     sample_names = pd.read_csv(samples, header=None, sep='\t', comment='#')[0]
     if index != None:
         sample_names = [sample_names[index]]
     for sample in sample_names:
-        prepare_genome_coverage(sample, sizes)
+        prepare_genome_coverage(sample)
 
 
-def prepare_genome_coverage(sample, sizes):
+def prepare_genome_coverage(sample):
     '''Prepare BED file used for genome coverage on a single sample.'''
     print ('Compute genome coverage on sample {}'.format(sample))
-    do_prepare_genome_coverage(sample, sizes)
+    do_prepare_genome_coverage(sample)
     splits = sb.splits(sample)
     for split in splits:
-        do_prepare_genome_coverage(split, sizes)
+        do_prepare_genome_coverage(split)
 
 
-def do_prepare_genome_coverage(sample, sizes):
+def do_prepare_genome_coverage(sample):
     bed_raw = sample + '.bed'
     bed_forcoverage = sample + '-forcov.bed'
     center_annotations(bed_raw, bed_forcoverage)
