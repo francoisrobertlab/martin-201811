@@ -1,10 +1,8 @@
 import logging
 import re
-import sys
 
 import click
 import pandas as pd
-import pyBigWig as pbw
 
 POSITIVE_STRAND = '+'
 NEGATIVE_STRAND = '-'
