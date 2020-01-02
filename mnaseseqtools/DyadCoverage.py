@@ -7,7 +7,7 @@ import click
 import pandas as pd
 import pyBigWig as pbw
 import seqtools.SplitBed as sb
-import statistics
+from statistics import mean
 
 POSITIVE_STRAND = '+'
 NEGATIVE_STRAND = '-'
@@ -42,39 +42,43 @@ def main(samples, genes, maxd, smoothing, index):
 def dyad_coverage(sample, genes, maxd, smoothing=None):
     '''Finds the distribution of ditances between fragments and dyad for a single sample.'''
     print ('Finds the distribution of ditances between fragments and dyad of sample {}'.format(sample))
+    if not smoothing:
+        smoothing = 0
+    smoothing = math.ceil(smoothing / 2.0)
     bw = pbw.open(sample + '-cov.bw')
-    distances = [[] for i in range(0, maxd * 2 + 1)]
+    distances = [[] for i in range(0, (maxd + smoothing) * 2 + 1)]
     for index, columns in genes.iterrows():
         chromosome = columns[1]
         max_end = bw.chroms(chromosome)
         if not max_end:
             max_end = 0
         negative = columns[4] == NEGATIVE_STRAND
-        theo_start = int(columns[6]) - maxd
+        theo_start = int(columns[6]) - maxd - smoothing
         start = max(theo_start, 0)
-        end = min(int(columns[6]) + maxd + 1, max_end)
-        distance = signal(bw, chromosome, start, end, smoothing) if end > start else []
+        end = min(int(columns[6]) + maxd + smoothing + 1, max_end)
+        distance = signal(bw, chromosome, start, end) if end > start else []
         if negative:
             distance.reverse()
-        for i in range(0, maxd * 2 + 1):
+        for i in range(0, (maxd + smoothing) * 2 + 1):
             distance_index = i - (start - theo_start)
             value = distance[distance_index] if distance_index in range(0, len(distance)) else 0
             distances[i].append(value if value and not math.isnan(value) else 0)
-    for i in range(0, maxd * 2 + 1):
-        genes['dyad position ' + str(i - maxd)] = distances[i]
-    output = sample + '-dyad.txt'
-    genes.to_csv(output, sep='\t', index=False)
+    for i in range(0, (maxd + smoothing) * 2 + 1):
+        genes['dyad position ' + str(i - maxd - smoothing)] = distances[i]
+    genes_output = sample + '-genes.txt'
+    genes.to_csv(genes_output, sep='\t', index=False)
+    sums = pd.DataFrame(index=list(range(-maxd - smoothing, maxd + smoothing + 1)))
+    sums['Frequency'] = [genes['dyad position ' + str(i)].sum() for i in range(-maxd - smoothing, maxd + smoothing + 1)]
+    dyads = pd.DataFrame(index=list(range(-maxd, maxd + 1)), columns=['Frequency'])
+    for i in range(-maxd, maxd + 1):
+        dyads.at[i, 'Frequency'] = mean([sums.at[j, 'Frequency'] for j in range(i - smoothing, i + smoothing)])
+    dyad_output = sample + '-dyad.txt'
+    dyads.to_csv(dyad_output, sep='\t')
 
 
-def signal(bw, chromosome, start, end, smoothing=None):
+def signal(bw, chromosome, start, end):
     '''Returns signal from bigWig'''
-    max_end = bw.chroms(chromosome)
-    if not max_end:
-        return []
-    if smoothing:
-        return [statistics.mean(bw.values(chromosome, max(i - smoothing, 0), min(i + smoothing, max_end))) for i in range(start, end)]
-    else:
-        return bw.values(chromosome, start, end)
+    return bw.values(chromosome, start, end)
 
 
 if __name__ == '__main__':
