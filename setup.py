@@ -19,6 +19,7 @@ setup(
         'pandas>=0.25.0',
         'pyBigWig>=0.3.17',
         'numpy>=1.13.3',
+        'matplotlib>=3.1.2',
         'seqtools@http://github.com/francoisrobertlab/seqtools/tarball/master'
     ],
     entry_points={
