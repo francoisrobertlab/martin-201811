@@ -16,10 +16,9 @@ setup(
     python_requires='>=3.7.4',
     install_requires=[
         'click>=7.0',
-        'pandas>=0.25.0',
+        'pandas>=0.25.3',
         'pyBigWig>=0.3.17',
-        'numpy>=1.13.3',
-        'matplotlib>=3.1.2',
+        'matplotlib>=3.1.1',
         'scipy>=1.3.2',
         'seqtools@http://github.com/francoisrobertlab/seqtools/tarball/master'
     ],
