@@ -1,13 +1,12 @@
 import logging
 import math
 from numpy import mean
-import sys
 
 import click
+import matplotlib.pyplot as plt
 import pandas as pd
 import pyBigWig as pbw
 import seqtools.SplitBed as sb
-from statistics import mean
 
 POSITIVE_STRAND = '+'
 NEGATIVE_STRAND = '-'
@@ -69,11 +68,21 @@ def dyad_coverage(sample, genes, maxd, smoothing=None):
     genes.to_csv(genes_output, sep='\t', index=False)
     sums = pd.DataFrame(index=list(range(-maxd - smoothing, maxd + smoothing + 1)))
     sums['Frequency'] = [genes['dyad position ' + str(i)].sum() for i in range(-maxd - smoothing, maxd + smoothing + 1)]
-    dyads = pd.DataFrame(index=list(range(-maxd, maxd + 1)), columns=['Frequency'])
+    dyads = pd.DataFrame(index=list(range(-maxd, maxd + 1)), columns=['Frequency', 'Relative Frequency'])
     for i in range(-maxd, maxd + 1):
         dyads.at[i, 'Frequency'] = mean([sums.at[j, 'Frequency'] for j in range(i - smoothing, i + smoothing)])
+    frequency_sum = dyads['Frequency'].sum()
+    for i in range(-maxd, maxd + 1):
+        dyads.at[i, 'Relative Frequency'] = dyads.at[i, 'Frequency'] / frequency_sum
     dyad_output = sample + '-dyad.txt'
     dyads.to_csv(dyad_output, sep='\t')
+    plt.plot(dyads.index.values, dyads['Relative Frequency'].values, color='red')
+    plt.xlabel('Position relative to dyad (bp)')
+    plt.ylabel('Relative Frequency')
+    plt.title(sample)
+    plot_output = sample + '-dyad.png'
+    plt.savefig(plot_output)
+    plt.clf()
 
 
 def signal(bw, chromosome, start, end):
