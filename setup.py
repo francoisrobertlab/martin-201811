@@ -20,6 +20,7 @@ setup(
         'pyBigWig>=0.3.17',
         'matplotlib>=3.1.1',
         'scipy>=1.3.2',
+        'lmfit>=1.0.0',
         'seqtools@http://github.com/francoisrobertlab/seqtools/tarball/master'
     ],
     entry_points={
