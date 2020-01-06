@@ -55,17 +55,18 @@ def fit_gaussian(sample, components, verbose):
         init = mod.eval(pars, x=x)
         out = mod.fit(y, pars, x=x)
         if components:
-            plt.plot(x, init, 'b--', label='initial fit')
+            plt.plot(x, init, 'b--', label='Initial fit')
         if verbose:
             print(out.fit_report(min_correl=0.5))
-        plt.plot(x, out.best_fit, 'b-', label='best fit')
+        plt.plot(x, out.best_fit, 'b-', label='Best fit')
         if components:
             comps = out.eval_components(x=x)
             plt.plot(x, np.repeat(comps['c_'], len(x)), 'g--', label='Constant component')
             plt.plot(x, comps['g_'], 'm--', label='Gaussian component')
     except Exception as e:
         logging.warning('could not fit gaussian curve to sample {}'.format(sample), e)
-    plt.legend(loc='lower right')
+    if components:
+        plt.legend(loc='lower right')
     plt.savefig(plot_output)
     plt.clf()
 
