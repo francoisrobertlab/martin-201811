@@ -60,13 +60,13 @@ def fit_double_gaussian(sample, components, verbose, c1, cmin1, cmax1, a1, amin1
     x = dyads.index.values
     y = dyads['Relative Frequency'].values
     if not a1:
-        a1 = dyads['Relative Frequency'].max()
+        a1 = dyads['Relative Frequency'].max() * 50
     if not c1:
         c1 = -dyads.index.max() / 4
     if not s1:
         s1 = dyads.index.max() / 5
     if not a2:
-        a2 = dyads['Relative Frequency'].max()
+        a2 = dyads['Relative Frequency'].max() * 50
     if not c2:
         c2 = dyads.index.max() / 4
     if not s2:
@@ -79,7 +79,7 @@ def fit_double_gaussian(sample, components, verbose, c1, cmin1, cmax1, a1, amin1
     try:
         constant = ConstantModel(prefix='c_')
         pars = constant.make_params()
-        pars['c_c'].set(value=0.0, min=0.0)
+        pars['c_c'].set(value=dyads['Relative Frequency'].min(), min=0.0, max=dyads['Relative Frequency'].max())
         gauss1 = GaussianModel(prefix='g1_')
         pars.update(gauss1.make_params())
         pars['g1_center'].set(value=c1, min=cmin1, max=cmax1)
