@@ -8,7 +8,7 @@ import seqtools.SplitBed as sb
 
 
 @click.command()
-@click.option('--samples', '-s', type=click.Path(exists=True), default='samples.txt',
+@click.option('--samples', '-s', type=click.Path(exists=True), default='samples.txt', show_default=True,
               help='Sample names listed one sample name by line.')
 @click.option('--index', '-i', type=int, default=None,
               help='Index of sample to process in samples file.')

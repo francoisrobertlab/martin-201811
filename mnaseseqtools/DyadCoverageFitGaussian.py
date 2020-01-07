@@ -9,7 +9,7 @@ import seqtools.SplitBed as sb
 
 
 @click.command()
-@click.option('--samples', '-s', type=click.Path(exists=True), default='samples.txt',
+@click.option('--samples', '-s', type=click.Path(exists=True), default='samples.txt', show_default=True,
               help='Sample names listed one sample name by line.')
 @click.option('--components', '-c', is_flag=True,
               help='Shows fit components and initial fit in plot.')

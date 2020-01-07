@@ -9,15 +9,15 @@ NEGATIVE_STRAND = '-'
 
 
 @click.command()
-@click.option('--genes', '-g', type=click.Path(exists=True), default='genes.txt',
+@click.option('--genes', '-g', type=click.Path(exists=True), default='genes.txt', show_default=True,
               help='Genes information with format <spacer text> <chromosome> <Gene Name> <TSS> <Strand> <TES>.')
-@click.option('--signal', '-s', type=click.Path(exists=True), default='signal.bed',
+@click.option('--signal', '-s', type=click.Path(exists=True), default='signal.bed', show_default=True,
               help='Dyads most likely positions as WIG file with one track per gene in the order of the genes input.')
-@click.option('--mind', '-d', type=int, default=50,
+@click.option('--mind', '-d', type=int, default=50, show_default=True,
               help='Minimum distance from gene start.')
-@click.option('--maxd', '-D', type=int, default=250,
+@click.option('--maxd', '-D', type=int, default=250, show_default=True,
               help='Maximum distance from gene start.')
-@click.option('--output', '-o', type=click.Path(), default='genes-out.txt',
+@click.option('--output', '-o', type=click.Path(), default='genes-out.txt', show_default=True,
               help='Output file.')
 def main(genes, signal, mind, maxd, output):
     '''Finds the most plausible position of first dyad for genes.'''

@@ -13,22 +13,22 @@ import seqtools.SplitBed
 
 
 @click.command()
-@click.option('--samples', '-s', type=click.Path(exists=True), default='samples.txt',
+@click.option('--samples', '-s', type=click.Path(exists=True), default='samples.txt', show_default=True,
               help='Sample names listed one sample name by line.'
               ' An SRR id can be provided (tab-separated) to download the FASTQ file automatically, otherwise FASTQ file must be provided.')
 @click.option('--merge', '-m', type=click.Path(), default='merge.txt',
               help='Merge name if first columns and sample names to merge on following columns - tab delimited.')
-@click.option('--fasta', '-f', type=click.Path(exists=True), default='sacCer3.fa',
+@click.option('--fasta', '-f', type=click.Path(exists=True), default='sacCer3.fa', show_default=True,
               help='FASTA file used for alignment.')
-@click.option('--sizes', '-S', type=click.Path(exists=True), default='sacCer3.chrom.sizes',
+@click.option('--sizes', '-S', type=click.Path(exists=True), default='sacCer3.chrom.sizes', show_default=True,
               help='Size of chromosomes.')
-@click.option('--threads', '-t', default=1,
+@click.option('--threads', '-t', default=1, show_default=True,
               help='Number of threads used to process data per sample.')
 @click.option('--splitLength', type=int, default=None,
               help='Split reads in bins by their length.')
-@click.option('--splitMinLength', default=100,
+@click.option('--splitMinLength', default=100, show_default=True,
               help='Split reads minimum length.')
-@click.option('--splitMaxLength', default=500,
+@click.option('--splitMaxLength', default=500, show_default=True,
               help='Split reads maximum length.')
 def main(samples, merge, fasta, sizes, threads, splitlength, splitminlength, splitmaxlength):
     '''Analyse Martin et al. data from November 2018 in Genetics.'''
