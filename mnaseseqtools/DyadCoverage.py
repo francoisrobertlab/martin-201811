@@ -17,13 +17,15 @@ NEGATIVE_STRAND = '-'
               help='Sample names listed one sample name by line.')
 @click.option('--genes', '-g', type=click.Path(exists=True), default='genes.txt',
               help='Genes information with format <spacer text> <chromosome> <Gene Name> <TSS> <Strand> <TES> <Dyad Position>.')
-@click.option('--maxd', '-d', type=int, default=100,
-              help='Maximum distance from dyad.')
+@click.option('--minp', '-p', type=int, default=-100,
+              help='Minimum position from dyad.')
+@click.option('--maxp', '-P', type=int, default=100,
+              help='Maximum position from dyad.')
 @click.option('--smoothing', '-S', type=int, default=None,
               help='Smooth the signal by averaging on smoothing window.')
 @click.option('--index', '-i', type=int, default=None,
               help='Index of sample to process in samples file.')
-def main(samples, genes, maxd, smoothing, index):
+def main(samples, genes, minp, maxp, smoothing, index):
     '''Finds the distribution of ditances between fragments and dyad.'''
     logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     genes_info = pd.read_csv(genes, sep='\t', comment='#')
@@ -32,47 +34,47 @@ def main(samples, genes, maxd, smoothing, index):
     if index != None:
         sample_names = [sample_names[index]]
     for sample in sample_names:
-        dyad_coverage(sample, genes_info, maxd, smoothing)
+        dyad_coverage(sample, genes_info, minp, maxp, smoothing)
         splits = sb.splits(sample)
         for split in splits:
-            dyad_coverage(split, genes_info, maxd, smoothing)
+            dyad_coverage(split, genes_info, minp, maxp, smoothing)
 
 
-def dyad_coverage(sample, genes, maxd, smoothing=None):
+def dyad_coverage(sample, genes, minp, maxp, smoothing=None):
     '''Finds the distribution of ditances between fragments and dyad for a single sample.'''
     print ('Finds the distribution of ditances between fragments and dyad of sample {}'.format(sample))
     if not smoothing:
         smoothing = 0
     smoothing = math.ceil(smoothing / 2.0)
     bw = pbw.open(sample + '-cov.bw')
-    distances = [[] for i in range(0, (maxd + smoothing) * 2 + 1)]
+    distances = [[] for i in range(0, maxp - minp + smoothing * 2 + 1)]
     for index, columns in genes.iterrows():
         chromosome = columns[1]
         max_end = bw.chroms(chromosome)
         if not max_end:
             max_end = 0
         negative = columns[4] == NEGATIVE_STRAND
-        theo_start = int(columns[6]) - maxd - smoothing
+        theo_start = int(columns[6]) + minp - smoothing
         start = max(theo_start, 0)
-        end = min(int(columns[6]) + maxd + smoothing + 1, max_end)
+        end = min(int(columns[6]) + maxp + smoothing + 1, max_end)
         distance = signal(bw, chromosome, start, end) if end > start else []
         if negative:
             distance.reverse()
-        for i in range(0, (maxd + smoothing) * 2 + 1):
+        for i in range(0, maxp - minp + smoothing * 2 + 1):
             distance_index = i - (start - theo_start)
             value = distance[distance_index] if distance_index in range(0, len(distance)) else 0
             distances[i].append(value if value and not math.isnan(value) else 0)
-    for i in range(0, (maxd + smoothing) * 2 + 1):
-        genes['dyad position ' + str(i - maxd - smoothing)] = distances[i]
+    for i in range(0, maxp - minp + smoothing * 2 + 1):
+        genes['dyad position ' + str(i + minp - smoothing)] = distances[i]
     genes_output = sample + '-genes.txt'
     genes.to_csv(genes_output, sep='\t', index=False)
-    sums = pd.DataFrame(index=list(range(-maxd - smoothing, maxd + smoothing + 1)))
-    sums['Frequency'] = [genes['dyad position ' + str(i)].sum() for i in range(-maxd - smoothing, maxd + smoothing + 1)]
-    dyads = pd.DataFrame(index=list(range(-maxd, maxd + 1)), columns=['Frequency', 'Relative Frequency'])
-    for i in range(-maxd, maxd + 1):
+    sums = pd.DataFrame(index=list(range(minp - smoothing, maxp + smoothing + 1)))
+    sums['Frequency'] = [genes['dyad position ' + str(i)].sum() for i in range(minp - smoothing, maxp + smoothing + 1)]
+    dyads = pd.DataFrame(index=list(range(minp, maxp + 1)), columns=['Frequency', 'Relative Frequency'])
+    for i in range(minp, maxp + 1):
         dyads.at[i, 'Frequency'] = mean([sums.at[j, 'Frequency'] for j in range(i - smoothing, i + smoothing)])
     frequency_sum = dyads['Frequency'].sum()
-    for i in range(-maxd, maxd + 1):
+    for i in range(minp, maxp + 1):
         dyads.at[i, 'Relative Frequency'] = dyads.at[i, 'Frequency'] / frequency_sum
     dyad_output = sample + '-dyad.txt'
     dyads.to_csv(dyad_output, sep='\t')
