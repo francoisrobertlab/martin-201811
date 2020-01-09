@@ -9,9 +9,14 @@
 #SBATCH --output=bowtie2-%A_%a.out
 #SBATCH --error=bowtie2-%A_%a.out
 
-if [ -z "$SLURM_ARRAY_TASK_ID" ]
+args=("$@")
+if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
 then
-  SLURM_ARRAY_TASK_ID=0
+  args+=("--index" "$SLURM_ARRAY_TASK_ID")
+fi
+if [ ! -z "$SLURM_CPUS_PER_TASK" ]
+then
+  args+=("--threads" "$SLURM_CPUS_PER_TASK")
 fi
 
 # Index FASTA file first
@@ -19,4 +24,4 @@ fi
 #
 # Recommended parameters for bowtie2
 # -x sacCer3.fa.index -X 1000
-runbowtie2 --threads 4 --index $SLURM_ARRAY_TASK_ID $@
+runbowtie2 "${args[@]}"

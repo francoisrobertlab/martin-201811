@@ -9,9 +9,14 @@
 #SBATCH --output=bam2bed-%A_%a.out
 #SBATCH --error=bam2bed-%A_%a.out
 
-if [ -z "$SLURM_ARRAY_TASK_ID" ]
+args=("$@")
+if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
 then
-  SLURM_ARRAY_TASK_ID=0
+  args+=("-i" "$SLURM_ARRAY_TASK_ID")
+fi
+if [ ! -z "$SLURM_CPUS_PER_TASK" ]
+then
+  args+=("-t" "$SLURM_CPUS_PER_TASK")
 fi
 
-bam2bed -t 4 -i $SLURM_ARRAY_TASK_ID
+bam2bed "${args[@]}"

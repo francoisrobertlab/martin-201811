@@ -9,11 +9,13 @@
 #SBATCH --output=download-%A_%a.out
 #SBATCH --error=download-%A_%a.out
 
-if [ -z "$SLURM_ARRAY_TASK_ID" ]
+args=("$@")
+args+=("--slow")
+if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
 then
-  SLURM_ARRAY_TASK_ID=0
+  args+=("-i" "$SLURM_ARRAY_TASK_ID")
 fi
 
 # Index FASTA file first
 # bwa index sacCer3.fa
-download --slow --index $SLURM_ARRAY_TASK_ID $@
+download "${args[@]}"

@@ -9,11 +9,12 @@
 #SBATCH --output=plot2do-%A_%a.out
 #SBATCH --error=plot2do-%A_%a.out
 
-if [ -z "$SLURM_ARRAY_TASK_ID" ]
+args=("$@")
+if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
 then
-  SLURM_ARRAY_TASK_ID=0
+  args+=("-i" "$SLURM_ARRAY_TASK_ID")
 fi
 
 # Parameters for Martin.
 # -t dyads -r Plus1 -L 400 -m 0.02
-plot2do -i $SLURM_ARRAY_TASK_ID $@
+plot2do "${args[@]}"

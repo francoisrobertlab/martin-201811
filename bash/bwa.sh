@@ -9,11 +9,16 @@
 #SBATCH --output=bwa-%A_%a.out
 #SBATCH --error=bwa-%A_%a.out
 
-if [ -z "$SLURM_ARRAY_TASK_ID" ]
+args=("$@")
+if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
 then
-  SLURM_ARRAY_TASK_ID=0
+  args+=("--index" "$SLURM_ARRAY_TASK_ID")
+fi
+if [ ! -z "$SLURM_CPUS_PER_TASK" ]
+then
+  args+=("--threads" "$SLURM_CPUS_PER_TASK")
 fi
 
 # Index FASTA file first
 # bwa index sacCer3.fa
-runbwa --threads 4 --index $SLURM_ARRAY_TASK_ID $@
+runbwa "${args[@]}"

@@ -9,9 +9,10 @@
 #SBATCH --output=genecov-%A_%a.out
 #SBATCH --error=genecov-%A_%a.out
 
-if [ -z "$SLURM_ARRAY_TASK_ID" ]
+args=("$@")
+if [ ! -z "$SLURM_ARRAY_TASK_ID" ]
 then
-  SLURM_ARRAY_TASK_ID=0
+  args+=("-i" "$SLURM_ARRAY_TASK_ID")
 fi
 
-genecov -i $SLURM_ARRAY_TASK_ID $@
+genecov "${args[@]}"
