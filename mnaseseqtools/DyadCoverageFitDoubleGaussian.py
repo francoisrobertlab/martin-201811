@@ -13,6 +13,8 @@ import seqtools.SplitBed as sb
               help='Sample name.')
 @click.option('--components', '-c', is_flag=True,
               help='Shows fit components and initial fit in plot.')
+@click.option('--gaussian', '-g', is_flag=True,
+              help='Shows gaussian components scaled with the constant component.')
 @click.option('--verbose', '-v', is_flag=True,
               help='Shows fit report.')
 @click.option('-c1', type=float, default=None,
@@ -43,16 +45,19 @@ import seqtools.SplitBed as sb
               help='Width (sigma) of second gaussian. Defaults to a fifth of maximum index')
 @click.option('--smin2', '-sm2', type=float, default=None,
               help='Minimum width (sigma) of second gaussian. Defaults to unbounded')
-def main(sample, components, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2):
+@click.option('--index', '-i', type=int, default=None,
+              help='Index of sample to process in samples file.')
+def main(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2, index):
     '''Fits double gaussian curve to dyad coverage.'''
     logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    fit_double_gaussian(sample, components, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2)
+    logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2)
     splits = sb.splits(sample)
     for split in splits:
-        fit_double_gaussian(sample, components, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2)
+        fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2)
+           
 
-
-def fit_double_gaussian(sample, components, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2):
+def fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2):
     '''Fits double gaussian curve to dyad coverage for a single sample.'''
     print ('Fits double gaussian curve to dyad coverage of sample {}'.format(sample))
     input = sample + '-dyad.txt'
@@ -98,6 +103,11 @@ def fit_double_gaussian(sample, components, verbose, c1, cmin1, cmax1, a1, amin1
         if verbose:
             print(out.fit_report(min_correl=0.5))
         plt.plot(x, out.best_fit, 'b-', label='Best fit')
+        if gaussian:
+            comps = out.eval_components(x=x)
+            constant_y = comps['c_']
+            plt.plot(x, [yv + constant_y for yv in comps['g1_']], 'm--', label='Gaussian 1')
+            plt.plot(x, [yv + constant_y for yv in comps['g2_']], 'y--', label='Gaussian 2')
         if components:
             comps = out.eval_components(x=x)
             plt.plot(x, np.repeat(comps['c_'], len(x)), 'g--', label='Constant component')
