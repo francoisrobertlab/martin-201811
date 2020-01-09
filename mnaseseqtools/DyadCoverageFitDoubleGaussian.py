@@ -9,8 +9,8 @@ import seqtools.SplitBed as sb
 
 
 @click.command()
-@click.option('--sample', '-s', default='sample', show_default=True,
-              help='Sample name.')
+@click.option('--samples', '-s', type=click.Path(exists=True), default='samples.txt', show_default=True,
+              help='Sample names listed one sample name by line.')
 @click.option('--components', '-c', is_flag=True,
               help='Shows fit components and initial fit in plot.')
 @click.option('--gaussian', '-g', is_flag=True,
@@ -47,14 +47,17 @@ import seqtools.SplitBed as sb
               help='Minimum width (sigma) of second gaussian. Defaults to unbounded')
 @click.option('--index', '-i', type=int, default=None,
               help='Index of sample to process in samples file.')
-def main(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2, index):
+def main(samples, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2, index):
     '''Fits double gaussian curve to dyad coverage.'''
     logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2)
-    splits = sb.splits(sample)
-    for split in splits:
+    sample_names = pd.read_csv(samples, header=None, sep='\t', comment='#')[0]
+    if index != None:
+        sample_names = [sample_names[index]]
+    for sample in sample_names:
         fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2)
+        splits = sb.splits(sample)
+        for split in splits:
+            fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2)
            
 
 def fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2):
