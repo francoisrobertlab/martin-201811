@@ -57,7 +57,7 @@ def main(samples, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1
         fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2)
         splits = sb.splits(sample)
         for split in splits:
-            fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2)
+            fit_double_gaussian(split, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2)
            
 
 def fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1, a1, amin1, s1, smin1, c2, cmin2, cmax2, a2, amin2, s2, smin2):
