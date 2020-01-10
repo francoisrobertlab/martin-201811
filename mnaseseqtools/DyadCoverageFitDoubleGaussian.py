@@ -79,6 +79,7 @@ def fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1,
         c2 = dyads.index.max() / 4
     if not s2:
         s2 = dyads.index.max() / 5
+    plt.figure()
     plt.plot(dyads.index.values, dyads['Relative Frequency'].values, color='red')
     plt.xlabel('Position relative to dyad (bp)')
     plt.ylabel('Relative Frequency')
@@ -121,6 +122,7 @@ def fit_double_gaussian(sample, components, gaussian, verbose, c1, cmin1, cmax1,
     if components:
         plt.legend(loc='lower right')
     plt.savefig(plot_output)
+    plt.close()
 
 
 if __name__ == '__main__':
