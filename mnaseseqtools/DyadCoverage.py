@@ -17,9 +17,9 @@ NEGATIVE_STRAND = '-'
               help='Sample names listed one sample name by line.')
 @click.option('--genes', '-g', type=click.Path(exists=True), default='genes.txt', show_default=True,
               help='Genes information with format <spacer text> <chromosome> <Gene Name> <TSS> <Strand> <TES> <Dyad Position>.')
-@click.option('--minp', '-p', type=int, default=-100, show_default=True,
+@click.option('--minp', '-p', type=int, default=-75, show_default=True,
               help='Minimum position from dyad.')
-@click.option('--maxp', '-P', type=int, default=100, show_default=True,
+@click.option('--maxp', '-P', type=int, default=75, show_default=True,
               help='Maximum position from dyad.')
 @click.option('--smoothing', '-S', type=int, default=None,
               help='Smooth the signal by averaging on smoothing window.')
