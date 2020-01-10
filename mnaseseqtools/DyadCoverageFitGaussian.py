@@ -13,24 +13,26 @@ import seqtools.SplitBed as sb
               help='Sample names listed one sample name by line.')
 @click.option('--components', '-c', is_flag=True,
               help='Shows fit components and initial fit in plot.')
+@click.option('--svg', is_flag=True,
+              help='Save vectorial plot.')
 @click.option('--verbose', '-v', is_flag=True,
               help='Shows fit report.')
 @click.option('--index', '-i', type=int, default=None,
               help='Index of sample to process in samples file.')
-def main(samples, components, verbose, index):
+def main(samples, components, svg, verbose, index):
     '''Fits gaussian curve to dyad coverage.'''
     logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     sample_names = pd.read_csv(samples, header=None, sep='\t', comment='#')[0]
     if index != None:
         sample_names = [sample_names[index]]
     for sample in sample_names:
-        fit_gaussian(sample, components, verbose)
+        fit_gaussian(sample, components, svg, verbose)
         splits = sb.splits(sample)
         for split in splits:
-            fit_gaussian(split, components, verbose)
+            fit_gaussian(split, components, svg, verbose)
 
 
-def fit_gaussian(sample, components, verbose):
+def fit_gaussian(sample, components, svg, verbose):
     '''Fits gaussian curve to dyad coverage for a single sample.'''
     print ('Fits gaussian curve to dyad coverage of sample {}'.format(sample))
     input = sample + '-dyad.txt'
@@ -69,6 +71,11 @@ def fit_gaussian(sample, components, verbose):
     if components:
         plt.legend(loc='lower right')
     plt.savefig(plot_output)
+    if svg:
+        plt.title(None)
+        plt.axis('off')
+        plot_svg_output = sample + '-dyad-gaussian.svg'
+        plt.savefig(plot_svg_output, transparent=True)
     plt.close()
 
 
