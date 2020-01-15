@@ -74,8 +74,6 @@ def fit_gaussian(sample, components, svg, verbose):
         plt.legend(loc='lower right')
     plt.savefig(plot_output)
     if svg:
-        plt.title(None)
-        plt.axis('off')
         plot_svg_output = sample + '-dyad-gaussian.svg'
         plt.savefig(plot_svg_output, transparent=True)
     plt.close()

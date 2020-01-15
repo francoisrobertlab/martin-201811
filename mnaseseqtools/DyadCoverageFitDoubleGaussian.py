@@ -127,8 +127,6 @@ def fit_double_gaussian(sample, components, gaussian, svg, verbose, c1, cmin1, c
         plt.legend(loc='lower right')
     plt.savefig(plot_output)
     if svg:
-        plt.title(None)
-        plt.axis('off')
         plot_svg_output = sample + '-dyad-double-gaussian.svg'
         plt.savefig(plot_svg_output, transparent=True)
     plt.close()
