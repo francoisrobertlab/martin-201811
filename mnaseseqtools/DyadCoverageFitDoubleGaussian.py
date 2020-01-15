@@ -82,10 +82,12 @@ def fit_double_gaussian(sample, components, gaussian, svg, verbose, c1, cmin1, c
     if not s2:
         s2 = dyads.index.max() / 5
     plt.figure()
-    plt.plot(dyads.index.values, dyads['Relative Frequency'].values, color='red')
+    plt.title(sample)
     plt.xlabel('Position relative to dyad (bp)')
     plt.ylabel('Relative Frequency')
-    plt.title(sample)
+    plt.axes().set_xlim(x[0], x[len(x) - 1])
+    plt.axes().set_xticks(list(range(x[0], x[len(x) - 1] + 1, 25)))
+    plt.plot(dyads.index.values, dyads['Relative Frequency'].values, color='red')
     plot_output = sample + '-dyad-double-gaussian.png'
     try:
         constant = ConstantModel(prefix='c_')

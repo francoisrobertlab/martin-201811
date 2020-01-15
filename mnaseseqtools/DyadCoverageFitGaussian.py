@@ -40,10 +40,12 @@ def fit_gaussian(sample, components, svg, verbose):
     x = dyads.index.values
     y = dyads['Relative Frequency'].values
     plt.figure()
-    plt.plot(dyads.index.values, dyads['Relative Frequency'].values, color='red')
+    plt.title(sample)
     plt.xlabel('Position relative to dyad (bp)')
     plt.ylabel('Relative Frequency')
-    plt.title(sample)
+    plt.axes().set_xlim(x[0], x[len(x) - 1])
+    plt.axes().set_xticks(list(range(x[0], x[len(x) - 1] + 1, 25)))
+    plt.plot(dyads.index.values, dyads['Relative Frequency'].values, color='red')
     plot_output = sample + '-dyad-gaussian.png'
     try:
         constant = ConstantModel(prefix='c_')
