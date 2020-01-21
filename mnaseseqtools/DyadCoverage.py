@@ -78,10 +78,13 @@ def dyad_coverage(sample, genes, minp, maxp, smoothing=None):
         dyads.at[i, 'Relative Frequency'] = dyads.at[i, 'Frequency'] / frequency_sum
     dyad_output = sample + '-dyad.txt'
     dyads.to_csv(dyad_output, sep='\t')
-    plt.plot(dyads.index.values, dyads['Relative Frequency'].values, color='red')
+    plt.figure()
+    plt.title(sample)
     plt.xlabel('Position relative to dyad (bp)')
     plt.ylabel('Relative Frequency')
-    plt.title(sample)
+    plt.xlim(x[0], x[len(x) - 1])
+    plt.xticks(list(range(x[0], x[len(x) - 1] + 1, 25)))
+    plt.plot(dyads.index.values, dyads['Relative Frequency'].values, color='red')
     plot_output = sample + '-dyad.png'
     plt.savefig(plot_output)
     plt.clf()

@@ -39,7 +39,7 @@ def fit_gaussian(sample, components, svg, verbose):
     dyads = pd.read_csv(input, sep='\t', index_col=0, comment='#')
     x = dyads.index.values
     y = dyads['Relative Frequency'].values
-    plt.subplots(1, 1)
+    plt.figure()
     plt.title(sample)
     plt.xlabel('Position relative to dyad (bp)')
     plt.ylabel('Relative Frequency')
