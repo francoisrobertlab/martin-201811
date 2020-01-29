@@ -41,7 +41,7 @@ always_load("plot2do")
 local base = "~/projects/def-robertf/mnase-201908"
 local call_nucleosomes = "~/projects/def-robertf/CallNucleosomes"
 prepend_path("PATH", pathJoin(base,"bash"))
-prepend_path("PATH", pathJoin(base,"venv/bin"))
+prepend_path("PATH", "~/mnaseseqtools-robertf-venv/bin")
 prepend_path("PERL5LIB", pathJoin(call_nucleosomes,"perl_library"))
 setenv("MNASE_BASE", base)
 setenv("MNASE_PATH", pathJoin(base,"mnaseseqtools"))
