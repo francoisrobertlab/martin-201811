@@ -8,7 +8,7 @@ setup(
     author_email='christian.poitras@ircm.qc.ca',
     description='Tools to analyze MNase-seq data',
     keywords='bioinformatics, MNase-seq',
-    url='https://github.com/francoisrobertlab/mnase-201908',
+    url='https://github.com/francoisrobertlab/mnaseseqtools',
     license='GNU General Public License version 3',
     classifiers=[
         'License :: OSI Approved :: GNU General Public License version 3'

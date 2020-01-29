@@ -1,6 +1,6 @@
 help([[
 For detailed instructions, go to:
-    https://github.com/francoisrobertlab/mnase-201908
+    https://github.com/francoisrobertlab/mnaseseqtools
 
 This module sets the following environment variables:
     MNASE_BASE: directory containing MNase-seq source code
@@ -22,7 +22,7 @@ This module loads the following modules and their requirements:
 
 whatis("Version: 1.0.0")
 whatis("Keywords: MNase-seq, Utility")
-whatis("URL: https://github.com/francoisrobertlab/mnase-201908")
+whatis("URL: https://github.com/francoisrobertlab/mnaseseqtools")
 whatis("Description: MNase-seq analysis for Celia Jeronimo data")
 
 always_load("nixpkgs/16.09")
@@ -38,7 +38,7 @@ always_load("kentutils/20180716")
 always_load("vap")
 always_load("plot2do")
 
-local base = "~/projects/def-robertf/mnase-201908"
+local base = "~/projects/def-robertf/mnaseseqtools"
 local call_nucleosomes = "~/projects/def-robertf/CallNucleosomes"
 prepend_path("PATH", pathJoin(base,"bash"))
 prepend_path("PATH", "~/mnaseseqtools-robertf-venv/bin")
