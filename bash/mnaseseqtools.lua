@@ -19,7 +19,7 @@ This module loads the following modules and their requirements:
 whatis("Version: 1.0.0")
 whatis("Keywords: MNase-seq, Utility")
 whatis("URL: https://github.com/francoisrobertlab/mnaseseqtools")
-whatis("Description: MNase-seq analysis for Celia Jeronimo data")
+whatis("Description: Tools for analysis of MNase-seq data")
 
 always_load("nixpkgs/16.09")
 always_load("gcc/7.3.0")
