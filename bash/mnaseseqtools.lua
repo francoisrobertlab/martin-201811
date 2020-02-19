@@ -2,11 +2,6 @@ help([[
 For detailed instructions, go to:
     https://github.com/francoisrobertlab/mnaseseqtools
 
-This module sets the following environment variables:
-    MNASE_BASE: directory containing MNase-seq source code
-    MNASE_PATH: directory containing MNase-seq analysis tools in python
-    MNASE_VENV: directory containing MNase-seq's virtual environment for python
-
 This module loads the following modules and their requirements:
     - python/3.7.4
     - perl/5.22.4
@@ -40,11 +35,8 @@ always_load("kentutils/20180716")
 always_load("vap")
 always_load("plot2do")
 
-local base = "~/projects/def-robertf/mnaseseqtools"
+local venv = "~/mnaseseqtools-robertf-venv"
 local call_nucleosomes = "~/projects/def-robertf/CallNucleosomes"
-prepend_path("PATH", pathJoin(base,"bash"))
-prepend_path("PATH", "~/mnaseseqtools-robertf-venv/bin")
+prepend_path("PATH", pathJoin(venv,"bash"))
+prepend_path("PATH", pathJoin(venv,"bin"))
 prepend_path("PERL5LIB", pathJoin(call_nucleosomes,"perl_library"))
-setenv("MNASE_BASE", base)
-setenv("MNASE_PATH", pathJoin(base,"mnaseseqtools"))
-setenv("MNASE_VENV", pathJoin(base,"venv/bin"))
