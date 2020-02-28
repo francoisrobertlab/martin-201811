@@ -28,8 +28,7 @@ setup(
             'dyadcov = mnaseseqtools.DyadCoverage:main',
             'fitdoublegaussian = mnaseseqtools.DyadCoverageFitDoubleGaussian:main',
             'fitgaussian = mnaseseqtools.DyadCoverageFitGaussian:main',
-            'prepgenecov = mnaseseqtools.PrepareGenomeCoverage:main',
-            'fullanalysis = mnaseseqtools.FullAnalysis:main'
+            'prepgenecov = mnaseseqtools.PrepareGenomeCoverage:main'
         ]
     }
 )
