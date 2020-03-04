@@ -16,4 +16,4 @@ then
   args+=("-i" "$SLURM_ARRAY_TASK_ID")
 fi
 
-fitdoublegaussian "${args[@]}"
+mnasetools fitdoublegaussian "${args[@]}"

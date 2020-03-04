@@ -15,4 +15,4 @@ then
   args+=("-i" "$SLURM_ARRAY_TASK_ID")
 fi
 
-prepgenecov "${args[@]}"
+mnasetools prepgenomecov "${args[@]}"
