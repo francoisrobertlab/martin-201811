@@ -25,10 +25,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'dyadcov = mnaseseqtools.DyadCoverage:main',
-            'fitdoublegaussian = mnaseseqtools.DyadCoverageFitDoubleGaussian:main',
-            'fitgaussian = mnaseseqtools.DyadCoverageFitGaussian:main',
-            'prepgenecov = mnaseseqtools.PrepareGenomeCoverage:main'
+            'mnasetools = mnaseseqtools.mnasetools:mnasetools'
         ]
     }
 )

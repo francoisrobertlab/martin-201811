@@ -1,8 +1,9 @@
 import logging
 import math
-from numpy import mean
 
 import click
+from numpy import mean
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import pyBigWig as pbw
@@ -25,7 +26,7 @@ NEGATIVE_STRAND = '-'
               help='Smooth the signal by averaging on smoothing window.')
 @click.option('--index', '-i', type=int, default=None,
               help='Index of sample to process in samples file.')
-def main(samples, genes, minp, maxp, smoothing, index):
+def dyadcov(samples, genes, minp, maxp, smoothing, index):
     '''Finds the distribution of ditances between fragments and dyad.'''
     logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     genes_info = pd.read_csv(genes, sep='\t', comment='#')
@@ -34,13 +35,13 @@ def main(samples, genes, minp, maxp, smoothing, index):
     if index != None:
         sample_names = [sample_names[index]]
     for sample in sample_names:
-        dyad_coverage(sample, genes_info, minp, maxp, smoothing)
+        dyad_coverage_sample(sample, genes_info, minp, maxp, smoothing)
         splits = sb.splits(sample)
         for split in splits:
-            dyad_coverage(split, genes_info, minp, maxp, smoothing)
+            dyad_coverage_sample(split, genes_info, minp, maxp, smoothing)
 
 
-def dyad_coverage(sample, genes, minp, maxp, smoothing=None):
+def dyad_coverage_sample(sample, genes, minp, maxp, smoothing=None):
     '''Finds the distribution of ditances between fragments and dyad for a single sample.'''
     print ('Finds the distribution of ditances between fragments and dyad of sample {}'.format(sample))
     if not smoothing:
@@ -97,4 +98,4 @@ def signal(bw, chromosome, start, end):
 
 
 if __name__ == '__main__':
-    main()
+    dyadcov()

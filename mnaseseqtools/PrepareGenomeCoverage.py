@@ -12,26 +12,26 @@ import seqtools.SplitBed as sb
               help='Sample names listed one sample name by line.')
 @click.option('--index', '-i', type=int, default=None,
               help='Index of sample to process in samples file.')
-def main(samples, index):
+def prepgenomecov(samples, index):
     '''Prepare BED file used for genome coverage on samples.'''
     logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     sample_names = pd.read_csv(samples, header=None, sep='\t', comment='#')[0]
     if index != None:
         sample_names = [sample_names[index]]
     for sample in sample_names:
-        prepare_genome_coverage(sample)
+        sample_splits_prepgenomecov(sample)
 
 
-def prepare_genome_coverage(sample):
+def sample_splits_prepgenomecov(sample):
     '''Prepare BED file used for genome coverage on a single sample.'''
     print ('Compute genome coverage on sample {}'.format(sample))
-    do_prepare_genome_coverage(sample)
+    prepgenomecov_sample(sample)
     splits = sb.splits(sample)
     for split in splits:
-        do_prepare_genome_coverage(split)
+        prepgenomecov_sample(split)
 
 
-def do_prepare_genome_coverage(sample):
+def prepgenomecov_sample(sample):
     bed_raw = sample + '.bed'
     bed_forcoverage = sample + '-forcov.bed'
     center_annotations(bed_raw, bed_forcoverage)
@@ -64,4 +64,4 @@ def center_annotations(bed, output):
 
 
 if __name__ == '__main__':
-    main()
+    prepgenomecov()

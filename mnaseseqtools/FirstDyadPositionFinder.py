@@ -19,7 +19,7 @@ NEGATIVE_STRAND = '-'
               help='Maximum distance from gene start.')
 @click.option('--output', '-o', type=click.Path(), default='genes-out.txt', show_default=True,
               help='Output file.')
-def main(genes, signal, mind, maxd, output):
+def firstdyadposition(genes, signal, mind, maxd, output):
     '''Finds the most plausible position of first dyad for genes.'''
     logging.basicConfig(filename='FirstDyadPositionFinder.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     genes_info = pd.read_csv(genes, sep='\t', comment='#')
@@ -92,4 +92,4 @@ def highest_signal(track, chromosome, start, end):
 
 
 if __name__ == '__main__':
-    main()
+    firstdyadposition()

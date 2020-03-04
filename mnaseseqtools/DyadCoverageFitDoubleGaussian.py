@@ -49,20 +49,20 @@ import seqtools.SplitBed as sb
               help='Minimum width (sigma) of second gaussian. Defaults to unbounded')
 @click.option('--index', '-i', type=int, default=None,
               help='Index of sample to process in samples file.')
-def main(samples, components, gaussian, svg, verbose, center1, cmin1, cmax1, amp1, amin1, sigma1, smin1, center2, cmin2, cmax2, amp2, amin2, sigma2, smin2, index):
+def fitdoublegaussian(samples, components, gaussian, svg, verbose, center1, cmin1, cmax1, amp1, amin1, sigma1, smin1, center2, cmin2, cmax2, amp2, amin2, sigma2, smin2, index):
     '''Fits double gaussian curve to dyad coverage.'''
     logging.basicConfig(filename='debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)-8s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     sample_names = pd.read_csv(samples, header=None, sep='\t', comment='#')[0]
     if index != None:
         sample_names = [sample_names[index]]
     for sample in sample_names:
-        fit_double_gaussian(sample, components, gaussian, svg, verbose, center1, cmin1, cmax1, amp1, amin1, sigma1, smin1, center2, cmin2, cmax2, amp2, amin2, sigma2, smin2)
+        fitdoublegaussian_sample(sample, components, gaussian, svg, verbose, center1, cmin1, cmax1, amp1, amin1, sigma1, smin1, center2, cmin2, cmax2, amp2, amin2, sigma2, smin2)
         splits = sb.splits(sample)
         for split in splits:
-            fit_double_gaussian(split, components, gaussian, svg, verbose, center1, cmin1, cmax1, amp1, amin1, sigma1, smin1, center2, cmin2, cmax2, amp2, amin2, sigma2, smin2)
+            fitdoublegaussian_sample(split, components, gaussian, svg, verbose, center1, cmin1, cmax1, amp1, amin1, sigma1, smin1, center2, cmin2, cmax2, amp2, amin2, sigma2, smin2)
            
 
-def fit_double_gaussian(sample, components, gaussian, svg, verbose, center1, cmin1, cmax1, amp1, amin1, sigma1, smin1, center2, cmin2, cmax2, amp2, amin2, sigma2, smin2):
+def fitdoublegaussian_sample(sample, components, gaussian, svg, verbose, center1, cmin1, cmax1, amp1, amin1, sigma1, smin1, center2, cmin2, cmax2, amp2, amin2, sigma2, smin2):
     '''Fits double gaussian curve to dyad coverage for a single sample.'''
     print ('Fits double gaussian curve to dyad coverage of sample {}'.format(sample))
     input = sample + '-dyad.txt'
@@ -133,4 +133,4 @@ def fit_double_gaussian(sample, components, gaussian, svg, verbose, center1, cmi
 
 
 if __name__ == '__main__':
-    main()
+    fitdoublegaussian()
