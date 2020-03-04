@@ -5,7 +5,7 @@ from lmfit.models import GaussianModel, ConstantModel
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seqtools.SplitBed as sb
+import seqtools.Split as sb
 
 
 @click.command()

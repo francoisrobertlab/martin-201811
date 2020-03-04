@@ -4,7 +4,7 @@ import subprocess
 
 import click
 import pandas as pd
-import seqtools.SplitBed as sb
+import seqtools.Split as sb
 
 
 @click.command()

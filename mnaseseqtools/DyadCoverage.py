@@ -7,7 +7,7 @@ from numpy import mean
 import matplotlib.pyplot as plt
 import pandas as pd
 import pyBigWig as pbw
-import seqtools.SplitBed as sb
+import seqtools.Split as sb
 
 POSITIVE_STRAND = '+'
 NEGATIVE_STRAND = '-'
