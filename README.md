@@ -1,2 +1,2 @@
 # mnaseseqtools
-Tools to analyse MNase-Seq data
+This project was merge into [seqtools](https://github.com/francoisrobertlab/seqtools).
